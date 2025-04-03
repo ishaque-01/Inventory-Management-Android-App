@@ -1,0 +1,37 @@
+<resources>
+    <style name="Theme.SoftMintApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary colors -->
+        <item name="colorPrimary">#36454F</item>  <!-- Dark Slate -->
+        <item name="colorPrimaryVariant">#1E2B33</item>  <!-- Darker Slate -->
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <!-- Secondary colors -->
+        <item name="colorSecondary">#4D5D6A</item>  <!-- Lighter Slate -->
+        <item name="colorSecondaryVariant">#1E2B33</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+
+        <!-- Background colors -->
+        <item name="android:windowBackground">#121A1F</item>  <!-- Very dark background -->
+        <item name="android:colorBackground">#121A1F</item>
+        <item name="colorSurface">#1E2B33</item>  <!-- Dark surface -->
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">#1E2B33</item>
+
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">#E0E0E0</item>  <!-- Light text -->
+        <item name="android:textColorSecondary">#A0A0A0</item>  <!-- Lighter text -->
+        <item name="colorOnSurface">#E0E0E0</item>
+
+        <!-- Dividers -->
+        <item name="dividerColor">#2D3A44</item>
+
+
+        <!-- Components (same styles as light theme) -->
+        <item name="buttonStyle">@style/Widget.SoftMintApp.Button</item>
+        <item name="materialButtonStyle">@style/Widget.SoftMintApp.Button</item>
+        <item name="textInputStyle">@style/Widget.SoftMintApp.TextInputLayout</item>
+        <item name="toolbarStyle">@style/Widget.SoftMintApp.Toolbar</item>
+        <item name="cardViewStyle">@style/Widget.SoftMintApp.CardView</item>
+    </style>
+</resources>

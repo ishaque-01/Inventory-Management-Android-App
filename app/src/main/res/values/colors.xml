@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light theme colors -->
+    <color name="primaryColor">#B2E0D6</color>  <!-- Soft Mint -->
+    <color name="primaryDarkColor">#8FC9BD</color>  <!-- Darker Mint -->
+    <color name="primaryLightColor">#D6F1EA</color>  <!-- Lighter Mint -->
+    <color name="textPrimary">#36454F</color>  <!-- Dark Slate -->
+    <color name="textSecondary">#607080</color>  <!-- Lighter Slate -->
+    <color name="textOnPrimary">#FFFFFF</color>  <!-- White text on buttons -->
+    <color name="background">#B2E0D6</color>  <!-- Soft Mint -->
+    <color name="surface">#FFFFFF</color>  <!-- White for cards -->
+    <color name="divider">#E0E0E0</color>
+    <color name="iconColor">#36454F</color>
+    <color name="error">#E57373</color>
+
+    <color name="surfaceDark">#1E2B33</color>  <!-- Dark surface -->
+    <color name="textPrimaryDark">#E0E0E0</color>  <!-- Light text -->
+    <color name="textSecondaryDark">#A0A0A0</color>  <!-- Lighter text -->
+</resources>
