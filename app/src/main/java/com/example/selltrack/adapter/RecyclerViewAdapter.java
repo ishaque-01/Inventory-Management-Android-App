@@ -66,15 +66,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public void onClick(View view) {
             int position = this.getAdapterPosition();
             ItemModel i = itemList.get(position);
-//            AlertDialog alertDialog = new AlertDialog(context, i.getItemName(), new AlertDialog.OnDeleteListener() {
-//                @Override
-//                public void onItemDeleted(String itemName) {
-//                    removeItem(position);
-//                }
-//            });
-//            alertDialog.show();
-            Intent intent = new Intent(context, EditItem.class);
-            startAc
+            AlertDialog alertDialog = new AlertDialog(context, i, new AlertDialog.OnDeleteListener() {
+                @Override
+                public void onItemDeleted(String itemName) {
+                    removeItem(position);
+                }
+            });
+            alertDialog.show();
+//            Intent intent = new Intent(context, EditItem.class);
+//            context.startActivity(intent);
         }
         public void removeItem(int position) {
             itemList.remove(position);

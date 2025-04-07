@@ -1,6 +1,11 @@
 package com.example.selltrack.Model;
 
-public class ItemModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class ItemModel implements Parcelable {
 
     private String itemName;
     private int quantity, id;
@@ -27,6 +32,25 @@ public class ItemModel {
         this.itemName = itemName;
     }
     public ItemModel(){}
+
+    protected ItemModel(Parcel in) {
+        itemName = in.readString();
+        quantity = in.readInt();
+        id = in.readInt();
+        price = in.readFloat();
+    }
+
+    public static final Creator<ItemModel> CREATOR = new Creator<ItemModel>() {
+        @Override
+        public ItemModel createFromParcel(Parcel in) {
+            return new ItemModel(in);
+        }
+
+        @Override
+        public ItemModel[] newArray(int size) {
+            return new ItemModel[size];
+        }
+    };
 
     public String getItemName() {
         return itemName;
@@ -58,6 +82,19 @@ public class ItemModel {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(itemName);
+        dest.writeInt(quantity);
+        dest.writeInt(id);
+        dest.writeFloat(price);
     }
 }
 

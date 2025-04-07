@@ -19,19 +19,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/positive"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_margin="15dp"
-        android:layout_weight="1"
-        android:fontFamily="serif"
-        android:text="delete"
-        android:textSize="18sp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <Button
+            android:id="@+id/positive"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:text="EDIT"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/negative"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:text="DELETE"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

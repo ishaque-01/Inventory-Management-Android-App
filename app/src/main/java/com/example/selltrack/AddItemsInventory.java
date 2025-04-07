@@ -22,7 +22,7 @@ import java.util.TimerTask;
 public class AddItemsInventory extends AppCompatActivity {
 
     EditText name, itemPrice, itemQuantity;
-    Button reset, add, update;
+    Button reset, add;
 
     DBHandler dbHandler;
 
@@ -45,7 +45,6 @@ public class AddItemsInventory extends AppCompatActivity {
 
         reset = findViewById(R.id.resetFields);
         add = findViewById(R.id.addItem);
-        update = findViewById(R.id.updateItem);
 
         reset.setOnClickListener((v) -> {
             resetFields();
@@ -55,30 +54,7 @@ public class AddItemsInventory extends AppCompatActivity {
             addItemInInventory();
         });
 
-        update.setOnClickListener((v) -> {
-            updateItemInInventory();
-        });
-    }
-
-    private void updateItemInInventory() {
-        if (!name.getText().toString().isBlank() && !itemPrice.getText().toString().isBlank()
-                && !itemQuantity.getText().toString().isBlank()) {
-            try {
-                String itemName = name.getText().toString().toLowerCase();
-                float price = Float.parseFloat(itemPrice.getText().toString());
-                int quantity = Integer.parseInt(itemQuantity.getText().toString());
-
-                ItemModel item = new ItemModel(itemName, quantity, price);
-                if (dbHandler.itemExists(item.getItemName())) {
-                    dbHandler.updateItem(item);
-                    setMessageUpdate("Item Updated Successfully!");
-                }
-
-            } catch (Exception io) {
-                setMessageUpdate("Error Occurred! Try Again");
-            }
-        }
-    }
+     }
 
     public void addItemInInventory() {
         if (!name.getText().toString().isBlank() && !itemPrice.getText().toString().isBlank()
@@ -110,18 +86,6 @@ public class AddItemsInventory extends AppCompatActivity {
                 itemQuantity.setError("Enter Product Quantity");
             }
         }
-    }
-
-    private void setMessageUpdate(String message) {
-        update.setText(message);
-        TimerTask task = new TimerTask() {
-            public void run() {
-                String message = "Update Item";
-                update.setText(message);
-            }
-        };
-        Timer timer = new Timer("Timer");
-        timer.schedule(task, 2000);
     }
 
     private void setMessageAdd(String message) {

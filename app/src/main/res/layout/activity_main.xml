@@ -37,7 +37,7 @@
             android:paddingBottom="10dp">
 
             <Button
-                android:id="@+id/positive"
+                android:id="@+id/inventory"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -47,14 +47,14 @@
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/negative"
+                android:id="@+id/sales"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:fontFamily="serif"
                 android:onClick="checkSells"
-                android:text="Sells"
+                android:text="Sales"
                 android:textSize="18sp" />
 
         </LinearLayout>
