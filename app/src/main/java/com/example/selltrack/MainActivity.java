@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         dbHandler = DBHandler.getInstance(MainActivity.this);
-
+        dbHandler.checkTables();
     }
     public void checkInventory(View view) {
         Fragment curr = getSupportFragmentManager().findFragmentById(R.id.fragmentView);

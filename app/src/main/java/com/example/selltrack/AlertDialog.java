@@ -16,12 +16,10 @@ import com.example.selltrack.data.DBHandler;
 public class AlertDialog extends Dialog {
 
     private ItemModel item;
-    private final OnDeleteListener deleteListener;
 
-    public AlertDialog(@NonNull Context context, ItemModel item, OnDeleteListener deleteListener) {
+    public AlertDialog(@NonNull Context context, ItemModel item) {
         super(context);
         this.item = item;
-        this.deleteListener = deleteListener;
     }
 
     @Override
@@ -35,20 +33,6 @@ public class AlertDialog extends Dialog {
         messageTxt.setText(message);
 
         Button positive = findViewById(R.id.positive);
-        Button negative = findViewById(R.id.negative);
-
-        negative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DBHandler dbHandler = DBHandler.getInstance(getContext());
-                dbHandler.deleteItem(item.getItemName());
-                if (deleteListener != null) {
-                    deleteListener.onItemDeleted(item.getItemName());
-                }
-                dismiss();
-            }
-        });
-
         positive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,9 +43,4 @@ public class AlertDialog extends Dialog {
             }
         });
     }
-
-    public interface OnDeleteListener {
-        void onItemDeleted(String itemName);
-    }
-
 }

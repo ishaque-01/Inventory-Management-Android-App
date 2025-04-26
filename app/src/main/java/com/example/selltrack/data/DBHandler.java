@@ -39,23 +39,65 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(createInventory);
         Log.d("CheckDB", "Inventory TABLE CREATED");
 
-        String createSells = "CREATE TABLE " + DbParams.SELLS_TABLE + "( " +
+        String createSells = "CREATE TABLE " + DbParams.SELLS_TABLE + " (" +
                 DbParams.SELL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                DbParams.ITEM_ID + " INTEGER, " +
-                DbParams.SOLD_QUANTITY + " TEXT NOT NULL, " +
-                DbParams.PRICE_PER_PRODUCT + " FLOAT NOT NULL, " +
-                DbParams.PER_DAY + " TEXT NOT NULL, " +
-                "FOREIGN KEY (" + DbParams.ITEM_ID + ") REFERENCES " +  DbParams.INVENTORY_TABLE + "(" + DbParams.PRODUCT_ID + "))";
-
+                DbParams.PRODUCT_ID + " INTEGER NOT NULL, " +
+                DbParams.TOTAL_PRICE + " FLOAT NOT NULL, " +
+                DbParams.DATE + " TEXT NOT NULL, " +
+                "FOREIGN KEY (" + DbParams.PRODUCT_ID + ") REFERENCES " +
+                DbParams.INVENTORY_TABLE + "(" + DbParams.PRODUCT_ID + ")" +
+                ")";
         db.execSQL(createSells);
         Log.d("CheckDB", "Sells TABLE CREATED");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + DbParams.INVENTORY_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + DbParams.SELLS_TABLE);
-        onCreate(db);
+        String createInventory = "CREATE TABLE " + DbParams.INVENTORY_TABLE + "( " +
+                DbParams.PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DbParams.PRODUCT_NAME + " TEXT UNIQUE NOT NULL, " +
+                DbParams.PRODUCT_PRICE + " FLOAT NOT NULL, " +
+                DbParams.PRODUCT_QUANTITY + " INTEGER NOT NULL " + ")";
+        db.execSQL(createInventory);
+    }
+
+    private void dataBaseVersionSix(SQLiteDatabase db) {
+
+        String createCitiesTable = "CREATE TABLE " + DbParams.CITY_TABLE + "( " +
+                DbParams.CITY_NAME + " TEXT NOT NULL, " +
+                DbParams.CITY_AREA_NAME + " TEXT NOT NULL, " +
+                DbParams.CITY_AREA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT" +
+                ")";
+        db.execSQL(createCitiesTable);
+
+        String createCustomerTable = "CREATE TABLE " + DbParams.CUSTOMER_TABLE + "( " +
+                DbParams.CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DbParams.CUSTOMER_NAME + " TEXT NOT NULL, " +
+                DbParams.CUSTOMER_AREA_ID + " TEXT NOT NULL, " +
+                "FOREIGN KEY (" + DbParams.CUSTOMER_AREA_ID + ") REFERENCES " +
+                DbParams.CITY_TABLE + "(" + DbParams.CITY_AREA_ID + ")" +
+                ")";
+        db.execSQL(createCustomerTable);
+
+        String createSellsTable = "CREATE TABLE " + DbParams.SELLS_TABLE + " (" +
+                DbParams.SELL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DbParams.SELLS_CUSTOMER_ID + " INTEGER NOT NULL, " +
+                DbParams.TOTAL_PRICE + " FLOAT NOT NULL, " +
+                DbParams.DATE + " TEXT NOT NULL, " +
+                "FOREIGN KEY (" + DbParams.SELLS_CUSTOMER_ID + ") REFERENCES " +
+                DbParams.CUSTOMER_TABLE + "(" + DbParams.CUSTOMER_ID + ")" +
+                ")";
+        db.execSQL(createSellsTable);
+
+        String createSalesItemsTable = "CREATE TABLE " + DbParams.SALES_ITEM_TABLE + "(" +
+                DbParams.SALES_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DbParams.SALES_SELL_ID + " INTEGER NOT NULL, " +
+                DbParams.SALES_PRODUCT_ID + " INTEGER NOT NULL, " +
+                DbParams.SALES_SOLD_QUANTITY + " INTEGER NOT NULL, " +
+                "FOREIGN KEY (" + DbParams.SALES_SELL_ID + ") REFERENCES " + DbParams.SELLS_TABLE + "(" + DbParams.SELL_ID + "), " +
+                "FOREIGN KEY (" + DbParams.SALES_PRODUCT_ID + ") REFERENCES " + DbParams.INVENTORY_TABLE + "(" + DbParams.PRODUCT_ID + ")" +
+                ")";
+        db.execSQL(createSalesItemsTable);
     }
 
     public void addItemInventory(ItemModel item) {
@@ -86,6 +128,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         return itemModelList;
     }
+
     public void checkTables() {
         try {
             SQLiteDatabase db = this.getReadableDatabase();
@@ -96,7 +139,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 Log.e("CheckDB", "Cursor is null! No tables found.");
                 return;
             }
-
 
             if (cursor.moveToFirst()) {
                 do {
@@ -113,7 +155,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public boolean itemExists(String itemName) {
         SQLiteDatabase db = this.getReadableDatabase();
         String select = "SELECT " + DbParams.PRODUCT_NAME + " FROM " + DbParams.INVENTORY_TABLE + " WHERE " + DbParams.PRODUCT_NAME + " = ?";
-        Cursor cursor = db.rawQuery(select, new String[] {itemName});
+        Cursor cursor = db.rawQuery(select, new String[]{itemName});
         boolean exists = cursor.getCount() > 0;
         cursor.close();
         db.close();
