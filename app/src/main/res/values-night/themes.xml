@@ -33,5 +33,13 @@
         <item name="textInputStyle">@style/Widget.SoftMintApp.TextInputLayout</item>
         <item name="toolbarStyle">@style/Widget.SoftMintApp.Toolbar</item>
         <item name="cardViewStyle">@style/Widget.SoftMintApp.CardView</item>
+        <item name="bottomNavigationStyle">@style/Widget.SoftMintApp.BottomNavigationView</item>
     </style>
+
+    <style name="Widget.SoftMintApp.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/iconColor</item>
+        <item name="itemTextColor">@color/textPrimary</item>
+        <item name="itemBackground">@color/surface</item>
+    </style>
+
 </resources>
