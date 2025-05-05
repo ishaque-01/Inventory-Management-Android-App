@@ -1,22 +1,23 @@
-<resources>
-    <style name="Theme.SoftMintApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary colors -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.SoftMint" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnPrimary">@color/textOnPrimary</item>
 
-        <!-- Secondary colors -->
+        <!-- Secondary brand color -->
         <item name="colorSecondary">@color/primaryDarkColor</item>
         <item name="colorSecondaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnSecondary">@color/textOnPrimary</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
         <!-- Background colors -->
         <item name="android:windowBackground">@color/background</item>
         <item name="android:colorBackground">@color/background</item>
         <item name="colorSurface">@color/surface</item>
-
-        <!-- Status bar -->
-        <item name="android:statusBarColor">@color/primaryDarkColor</item>
 
         <!-- Text colors -->
         <item name="android:textColorPrimary">@color/textPrimary</item>
@@ -26,25 +27,28 @@
         <!-- Dividers -->
         <item name="dividerColor">@color/divider</item>
 
-
         <!-- Components -->
-        <item name="buttonStyle">@style/Widget.SoftMintApp.Button</item>
-        <item name="materialButtonStyle">@style/Widget.SoftMintApp.Button</item>
-        <item name="textInputStyle">@style/Widget.SoftMintApp.TextInputLayout</item>
-        <item name="toolbarStyle">@style/Widget.SoftMintApp.Toolbar</item>
-        <item name="cardViewStyle">@style/Widget.SoftMintApp.CardView</item>
-        <item name="bottomNavigationStyle">@style/Widget.SoftMintApp.BottomNavigationView</item>
+        <item name="bottomNavigationStyle">@style/Widget.SoftMint.BottomNavigationView</item>
+        <item name="materialButtonStyle">@style/Widget.SoftMint.Button</item>
+        <item name="textInputStyle">@style/Widget.SoftMint.TextInputLayout</item>
     </style>
 
-    <!-- Button style -->
-    <style name="Widget.SoftMintApp.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/textOnPrimary</item>
+    <!-- Bottom Navigation View -->
+    <style name="Widget.SoftMint.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/iconColor</item>
+        <item name="itemTextColor">@color/textPrimary</item>
+        <item name="itemBackground">@color/surface</item>
+    </style>
+
+    <!-- Button Style -->
+    <style name="Widget.SoftMint.Button" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/primaryDarkColor</item>
+        <item name="android:textColor">@color/textOnPrimary</item>
         <item name="cornerRadius">8dp</item>
     </style>
 
-    <!-- TextInputLayout style -->
-    <style name="Widget.SoftMintApp.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <!-- Text Input Layout -->
+    <style name="Widget.SoftMint.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/textSecondary</item>
         <item name="android:textColorHint">@color/textSecondary</item>
         <item name="hintTextColor">@color/textSecondary</item>
@@ -52,26 +56,5 @@
         <item name="boxCornerRadiusTopEnd">8dp</item>
         <item name="boxCornerRadiusBottomStart">8dp</item>
         <item name="boxCornerRadiusBottomEnd">8dp</item>
-    </style>
-
-    <!-- Toolbar style -->
-    <style name="Widget.SoftMintApp.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
-        <item name="android:background">@color/primaryColor</item>
-        <item name="titleTextColor">@color/textOnPrimary</item>
-        <item name="subtitleTextColor">@color/textOnPrimary</item>
-        <item name="navigationIconTint">@color/textOnPrimary</item>
-    </style>
-
-    <!-- CardView style -->
-    <style name="Widget.SoftMintApp.CardView" parent="Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">@color/surface</item>
-        <item name="cardElevation">4dp</item>
-        <item name="cardCornerRadius">8dp</item>
-    </style>
-
-    <style name="Widget.SoftMintApp.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemIconTint">@color/iconColor</item>
-        <item name="itemTextColor">@color/textPrimary</item>
-        <item name="itemBackground">@color/surface</item>
     </style>
 </resources>

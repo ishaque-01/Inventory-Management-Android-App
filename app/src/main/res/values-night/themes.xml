@@ -1,45 +1,60 @@
-<resources>
-    <style name="Theme.SoftMintApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary colors -->
-        <item name="colorPrimary">#36454F</item>  <!-- Dark Slate -->
-        <item name="colorPrimaryVariant">#1E2B33</item>  <!-- Darker Slate -->
-        <item name="colorOnPrimary">@android:color/white</item>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Dark theme variation -->
+    <style name="Theme.SoftMint" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/primaryColorDark</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColorDark</item>
+        <item name="colorOnPrimary">@color/textOnPrimary</item>
 
-        <!-- Secondary colors -->
-        <item name="colorSecondary">#4D5D6A</item>  <!-- Lighter Slate -->
-        <item name="colorSecondaryVariant">#1E2B33</item>
-        <item name="colorOnSecondary">@android:color/white</item>
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/primaryDarkColorDark</item>
+        <item name="colorSecondaryVariant">@color/primaryDarkColorDark</item>
+        <item name="colorOnSecondary">@color/textOnPrimary</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
         <!-- Background colors -->
-        <item name="android:windowBackground">#121A1F</item>  <!-- Very dark background -->
-        <item name="android:colorBackground">#121A1F</item>
-        <item name="colorSurface">#1E2B33</item>  <!-- Dark surface -->
-
-        <!-- Status bar -->
-        <item name="android:statusBarColor">#1E2B33</item>
+        <item name="android:windowBackground">@color/primaryColorDark</item>
+        <item name="android:colorBackground">@color/primaryColorDark</item>
+        <item name="colorSurface">@color/surfaceDark</item>
 
         <!-- Text colors -->
-        <item name="android:textColorPrimary">#E0E0E0</item>  <!-- Light text -->
-        <item name="android:textColorSecondary">#A0A0A0</item>  <!-- Lighter text -->
-        <item name="colorOnSurface">#E0E0E0</item>
+        <item name="android:textColorPrimary">@color/textPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/textSecondaryDark</item>
+        <item name="colorOnSurface">@color/textPrimaryDark</item>
 
         <!-- Dividers -->
-        <item name="dividerColor">#2D3A44</item>
+        <item name="dividerColor">@color/primaryDarkColorDark</item>
 
-
-        <!-- Components (same styles as light theme) -->
-        <item name="buttonStyle">@style/Widget.SoftMintApp.Button</item>
-        <item name="materialButtonStyle">@style/Widget.SoftMintApp.Button</item>
-        <item name="textInputStyle">@style/Widget.SoftMintApp.TextInputLayout</item>
-        <item name="toolbarStyle">@style/Widget.SoftMintApp.Toolbar</item>
-        <item name="cardViewStyle">@style/Widget.SoftMintApp.CardView</item>
-        <item name="bottomNavigationStyle">@style/Widget.SoftMintApp.BottomNavigationView</item>
+        <!-- Components -->
+        <item name="bottomNavigationStyle">@style/Widget.SoftMint.BottomNavigationView.Dark</item>
+        <item name="materialButtonStyle">@style/Widget.SoftMint.Button.Dark</item>
+        <item name="textInputStyle">@style/Widget.SoftMint.TextInputLayout.Dark</item>
     </style>
 
-    <style name="Widget.SoftMintApp.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemIconTint">@color/iconColor</item>
-        <item name="itemTextColor">@color/textPrimary</item>
-        <item name="itemBackground">@color/surface</item>
+    <!-- Dark Bottom Navigation -->
+    <style name="Widget.SoftMint.BottomNavigationView.Dark" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/iconColorDark</item>
+        <item name="itemTextColor">@color/textPrimaryDark</item>
+        <item name="itemBackground">@color/surfaceDark</item>
     </style>
 
+    <!-- Dark Button Style -->
+    <style name="Widget.SoftMint.Button.Dark" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/primaryDarkColorDark</item>
+        <item name="android:textColor">@color/textOnPrimary</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <!-- Dark Text Input -->
+    <style name="Widget.SoftMint.TextInputLayout.Dark" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/textSecondaryDark</item>
+        <item name="android:textColorHint">@color/textSecondaryDark</item>
+        <item name="hintTextColor">@color/textSecondaryDark</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+    </style>
 </resources>
