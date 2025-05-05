@@ -30,20 +30,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-
-        } catch (Exception e ) {
-            Log.d("navError", "Error: " + e);
-        }
         setContentView(binding.getRoot());
-        EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        binding.bottomNav.setBackground(null);
         binding.bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if(id == R.id.inventory) {
