@@ -1,8 +1,6 @@
 package com.example.selltrack;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -13,7 +11,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.selltrack.Model.ItemModel;
-import com.example.selltrack.adapter.RecyclerViewAdapter;
 import com.example.selltrack.data.DBHandler;
 
 import java.util.Timer;
@@ -66,14 +63,14 @@ public class AddItemsInventory extends AppCompatActivity {
 
                 ItemModel item = new ItemModel(itemName, quantity, price);
                 if (dbHandler.itemExists(item.getItemName())) {
-                    setMessageAdd("Item Already Available");
+                    setMessage("Item Already Available");
                     return;
                 }
                 dbHandler.addItemInventory(item);
-                setMessageAdd("Item Added Successfully!");
+                setMessage("Item Added Successfully!");
 
             } catch (Exception io) {
-                setMessageAdd("Error Occurred! Try Again");
+                setMessage("Error Occurred! Try Again");
             }
         } else {
             if (name.getText().toString().isBlank()) {
@@ -88,7 +85,7 @@ public class AddItemsInventory extends AppCompatActivity {
         }
     }
 
-    private void setMessageAdd(String message) {
+    private void setMessage(String message) {
         add.setText(message);
         TimerTask task = new TimerTask() {
             public void run() {

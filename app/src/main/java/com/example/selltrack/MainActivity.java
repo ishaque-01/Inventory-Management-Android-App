@@ -13,10 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.selltrack.Model.CitiesModel;
 import com.example.selltrack.Model.ItemModel;
 import com.example.selltrack.data.DBHandler;
 import com.example.selltrack.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     DBHandler dbHandler;
     List<ItemModel> itemsList;
+    List<CitiesModel> citiesList;
 
     ActivityMainBinding binding;
 
@@ -54,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dbHandler = DBHandler.getInstance(MainActivity.this);
-        //dbHandler.checkTables();
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -66,42 +68,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    public void checkInventory(View view) {
-//        Fragment curr = getSupportFragmentManager().findFragmentById(R.id.fragmentView);
-//        if(curr instanceof InventoryFragment)
-//            return;
-//
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.setCustomAnimations(
-//                R.anim.slide_in_left,
-//                R.anim.slide_out_right,
-//                R.anim.slide_in_right,
-//                R.anim.slide_out_left
-//        );
-//        fragmentTransaction.replace(R.id.fragmentView, new InventoryFragment(), null);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
-//    }
-
-
-    //    public void checkSells(View view) {
-//        Fragment curr = getSupportFragmentManager().findFragmentById(R.id.fragmentView);
-//        if(curr instanceof SellsFragment)
-//            return;
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.setCustomAnimations(
-//                R.anim.slide_in_right,
-//                R.anim.slide_out_left,
-//                R.anim.slide_in_left,
-//                R.anim.slide_out_right
-//        );
-//        fragmentTransaction.replace(R.id.fragmentView, new SellsFragment(), null);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
-//    }
     public List<ItemModel> getItemsList() {
         if (itemsList == null)
             itemsList = dbHandler.getInventoryItems();
         return itemsList;
+    }
+
+    public List<CitiesModel> getCitiesList() {
+        if(citiesList == null)
+            citiesList = dbHandler.getAllCities();
+        return citiesList;
     }
 }

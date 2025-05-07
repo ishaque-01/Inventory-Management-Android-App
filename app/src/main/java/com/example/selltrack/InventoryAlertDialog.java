@@ -11,13 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.selltrack.Model.ItemModel;
-import com.example.selltrack.data.DBHandler;
 
-public class AlertDialog extends Dialog {
+public class InventoryAlertDialog extends Dialog {
 
     private ItemModel item;
 
-    public AlertDialog(@NonNull Context context, ItemModel item) {
+    public InventoryAlertDialog(@NonNull Context context, ItemModel item) {
         super(context);
         this.item = item;
     }
@@ -26,7 +25,7 @@ public class AlertDialog extends Dialog {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.alert_dialog);
+        setContentView(R.layout.inventory_alert_dialog);
 
         String message = "Do You Want To Delete \"" + item.getItemName() + "\" From Database?";
         final TextView messageTxt = findViewById(R.id.textView);

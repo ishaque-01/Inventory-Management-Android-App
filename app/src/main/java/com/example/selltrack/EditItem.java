@@ -71,7 +71,6 @@ public class EditItem extends AppCompatActivity {
             }
         }
     }
-
     private void showMessage() {
         String message = "Item Updated";
         editItem.setText(message);

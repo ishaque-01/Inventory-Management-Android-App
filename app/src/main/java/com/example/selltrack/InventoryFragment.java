@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.selltrack.Model.ItemModel;
-import com.example.selltrack.adapter.RecyclerViewAdapter;
+import com.example.selltrack.adapter.InventoryAdaptor;
 import com.example.selltrack.data.DBHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,7 +24,7 @@ public class InventoryFragment extends Fragment {
 
     RecyclerView recyclerView;
     List<ItemModel> itemList;
-    RecyclerViewAdapter recyclerViewAdapter;
+    InventoryAdaptor recyclerViewAdapter;
 
     public InventoryFragment() {
         itemList = new ArrayList<>();
@@ -54,7 +54,7 @@ public class InventoryFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(false);
-        recyclerViewAdapter = new RecyclerViewAdapter(requireContext(), itemList);
+        recyclerViewAdapter = new InventoryAdaptor(requireContext(), itemList);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         return view;
