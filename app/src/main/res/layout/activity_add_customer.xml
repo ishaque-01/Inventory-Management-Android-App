@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddCity">
+    tools:context=".AddCustomer">
 
     <TextView
         android:id="@+id/textView2"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:fontFamily="serif"
-        android:text="Add New Cities"
+        android:text="Add New Customers"
         android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <EditText
-            android:id="@+id/cityName"
+            android:id="@+id/customerName"
             android:layout_width="match_parent"
             android:layout_height="66dp"
             android:layout_marginStart="10dp"
@@ -42,12 +42,12 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:fontFamily="serif"
-            android:hint="Enter City Name"
+            android:hint="Enter Customer Name"
             android:inputType="text"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/areaName"
+            android:id="@+id/areaId"
             android:layout_width="match_parent"
             android:layout_height="66dp"
             android:layout_marginStart="10dp"
@@ -55,18 +55,18 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:fontFamily="serif"
-            android:hint="Enter Area Name"
-            android:inputType="text"
+            android:hint="Enter Area ID"
+            android:inputType="number"
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/addCity"
+            android:id="@+id/addCustomer"
             android:layout_width="match_parent"
             android:layout_height="66dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:fontFamily="serif"
-            android:text="Add City"
+            android:text="Add Customer"
             android:textSize="18sp"
             android:textStyle="bold" />
 

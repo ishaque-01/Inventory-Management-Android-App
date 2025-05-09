@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.selltrack.Model.CitiesModel;
+import com.example.selltrack.Model.CustomerModel;
 import com.example.selltrack.Model.ItemModel;
 import com.example.selltrack.data.DBHandler;
 import com.example.selltrack.databinding.ActivityMainBinding;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     DBHandler dbHandler;
     List<ItemModel> itemsList;
     List<CitiesModel> citiesList;
+    List<CustomerModel> customersList;
 
     ActivityMainBinding binding;
 
@@ -78,5 +80,10 @@ public class MainActivity extends AppCompatActivity {
         if(citiesList == null)
             citiesList = dbHandler.getAllCities();
         return citiesList;
+    }
+    public List<CustomerModel> getCustomerList() {
+        if(customersList == null)
+            customersList = dbHandler.getAllCustomers();
+        return customersList;
     }
 }

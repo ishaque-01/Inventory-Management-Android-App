@@ -3,7 +3,7 @@ package com.example.selltrack.parameters;
 public class DbParams {
 
     // Database
-    public static final int DB_VERSION = 10;
+    public static final int DB_VERSION = 11;
     public static final String DB_NAME = "SellTrackDB";
 
     // Inventory Table

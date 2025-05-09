@@ -17,7 +17,7 @@ import com.example.selltrack.R;
 
 import java.util.List;
 
-public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CustomerViewHolder>{
+public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHolder>{
     private final Context context;
     private final List<CitiesModel> list;
 
@@ -28,13 +28,13 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CustomerVi
 
     @NonNull
     @Override
-    public CustomerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view  = LayoutInflater.from(context).inflate(R.layout.cities_row, parent, false);
-        return new CustomerViewHolder(view);
+        return new CityViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CityViewHolder holder, int position) {
         CitiesModel city = list.get(position);
 
         holder.areaId.setText(String.valueOf(city.getAreaId()));
@@ -48,13 +48,13 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CustomerVi
         return list.size();
     }
 
-    class CustomerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class CityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView areaId;
         private final TextView cityName;
         private final TextView areaName;
 
-        public CustomerViewHolder(@NonNull View itemView) {
+        public CityViewHolder(@NonNull View itemView) {
             super(itemView);
             areaId = itemView.findViewById(R.id.areaId);
             cityName = itemView.findViewById(R.id.cityName);

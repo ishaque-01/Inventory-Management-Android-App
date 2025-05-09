@@ -38,6 +38,7 @@ public class EditCity extends AppCompatActivity {
 
         cityModel = getIntent().getParcelableExtra("city");
         id = cityModel.getAreaId();
+
         cityName = findViewById(R.id.cityName);
         cityName.setText(cityModel.getCityName());
         areaName = findViewById(R.id.areaName);

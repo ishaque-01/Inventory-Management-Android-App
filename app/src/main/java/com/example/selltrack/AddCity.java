@@ -46,7 +46,8 @@ public class AddCity extends AppCompatActivity {
 
         resetFields = findViewById(R.id.resetFields);
         resetFields.setOnClickListener((v) -> {
-            resetFields();
+            cityName.setText("");
+            areaName.setText("");
         });
     }
 
@@ -85,9 +86,5 @@ public class AddCity extends AppCompatActivity {
         };
         Timer timer = new Timer("Timer");
         timer.schedule(task, 2000);
-    }
-    private void resetFields() {
-        cityName.setText("");
-        areaName.setText("");
     }
 }
