@@ -50,26 +50,21 @@ public class AddCustomer extends AppCompatActivity {
     }
 
     private void formValidation() {
-        if(!customerName.getText().toString().isBlank() && !areaId.getText().toString().isBlank()) {
+        if (!customerName.getText().toString().isBlank() && !areaId.getText().toString().isBlank()) {
             try {
-                String name = customerName.getText().toString();
+                String name = customerName.getText().toString().toLowerCase().trim();
                 int id = Integer.parseInt(areaId.getText().toString());
                 CustomerModel customer = new CustomerModel(name, id);
-
-                if(!dbHandler.customerExists(customer)) {
-                    dbHandler.addCustomer(customer);
-                    setMessage("Customer Added");
-                } else {
-                    setMessage("Customer Already Added!");
-                }
+                dbHandler.addCustomer(customer);
+                setMessage("Customer Added");
             } catch (Exception e) {
                 setMessage("An Error Occurred! Try Again");
             }
         } else {
-            if(customerName.getText().toString().isBlank()) {
+            if (customerName.getText().toString().isBlank()) {
                 customerName.setError("Enter Customer Name");
             }
-            if(areaId.getText().toString().isBlank()) {
+            if (areaId.getText().toString().isBlank()) {
                 areaId.setError("Enter Area ID");
             }
         }

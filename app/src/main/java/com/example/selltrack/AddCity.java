@@ -54,8 +54,8 @@ public class AddCity extends AppCompatActivity {
     private void addNewCity() {
         if (!cityName.getText().toString().isBlank() && !areaName.getText().toString().isBlank()) {
            try {
-               String city = cityName.getText().toString().toLowerCase();
-               String area = areaName.getText().toString().toLowerCase();
+               String city = cityName.getText().toString().toLowerCase().trim();
+               String area = areaName.getText().toString().toLowerCase().trim();
                CitiesModel c = new CitiesModel(city, area);
 
                if (!dbHandler.isCityExists(c)) {

@@ -41,7 +41,7 @@ public class EditCustomer extends AppCompatActivity {
 
 
         CustomerModel model = getIntent().getParcelableExtra("customer");
-        int id = model.getCustomerArea();
+        int id = model.getCustomerId();
         customerName = findViewById(R.id.cName);
         customerName.setText(model.getCustomerName());
         areaId = findViewById(R.id.areaId);
@@ -55,7 +55,7 @@ public class EditCustomer extends AppCompatActivity {
     private void formValidation(int cId) {
         if (!customerName.getText().toString().isBlank() && !areaId.getText().toString().isBlank()) {
             try {
-                String n = customerName.getText().toString();
+                String n = customerName.getText().toString().toLowerCase();
                 int id = Integer.parseInt(areaId.getText().toString());
                 CustomerModel updated = new CustomerModel(cId, n, id);
                 if(dbHandler.customerExists(updated)) {

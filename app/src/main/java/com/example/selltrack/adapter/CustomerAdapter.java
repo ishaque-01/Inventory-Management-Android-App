@@ -38,7 +38,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         CustomerModel customer = list.get(position);
 
         holder.customerId.setText(String.valueOf(customer.getCustomerId()));
-        holder.customerName.setText(customer.getCustomerName());
+        holder.customerName.setText(customer.getCustomerName().toUpperCase());
         holder.areaId.setText(String.valueOf("Area ID: " + customer.getCustomerArea()));
     }
 

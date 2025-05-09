@@ -53,8 +53,8 @@ public class EditCity extends AppCompatActivity {
         if (!cityName.getText().toString().isBlank() && !areaName.getText().toString().isBlank()) {
             try {
                 DBHandler dbHandler = DBHandler.getInstance(EditCity.this);
-                String city = cityName.getText().toString();
-                String area = areaName.getText().toString();
+                String city = cityName.getText().toString().toLowerCase().trim();
+                String area = areaName.getText().toString().toLowerCase().trim();
                 CitiesModel citiesModel = new CitiesModel(city, area, id);
 
                 if (dbHandler.isCityExists(citiesModel)) {
