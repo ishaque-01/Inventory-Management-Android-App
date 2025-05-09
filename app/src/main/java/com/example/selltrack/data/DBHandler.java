@@ -278,16 +278,20 @@ public class DBHandler extends SQLiteOpenHelper {
     public void updateCustomer(CustomerModel customer) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        String n = customer.getCustomerName();
+        int id = customer.getCustomerArea();
+        Log.d("checkDB", "NAme: " + n + " Area: " + id);
         values.put(DbParams.CUSTOMER_NAME, customer.getCustomerName());
         values.put(DbParams.CUSTOMER_AREA_ID, customer.getCustomerArea());
         db.update(DbParams.CUSTOMER_TABLE, values,
-                DbParams.CITY_AREA_ID + " = ? ", new String[]{String.valueOf(customer.getCustomerArea())});
+                DbParams.CUSTOMER_ID + " = ? ", new String[]{String.valueOf(customer.getCustomerId())});
         db.close();
     }
     public boolean customerExists(CustomerModel customer) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE + " WHERE " + DbParams.CUSTOMER_ID + " = ? ";
-        String[] where = {String.valueOf(customer.getCustomerId())};
+        String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE + " WHERE " +
+                DbParams.CUSTOMER_ID + " = ? AND " + DbParams.CUSTOMER_NAME + " = ? AND " + DbParams.CUSTOMER_AREA_ID + " = ?";
+        String[] where = {String.valueOf(customer.getCustomerId()), customer.getCustomerName(), String.valueOf(customer.getCustomerArea())};
         Cursor cursor = db.rawQuery(query, where);
         boolean exists = cursor.getCount() > 0;
         cursor.close();
@@ -296,7 +300,6 @@ public class DBHandler extends SQLiteOpenHelper {
     }
     public List<CustomerModel> getAllCustomers() {
         List<CustomerModel> list = new ArrayList<>();
-
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE;
         Cursor cursor = db.rawQuery(query, null);

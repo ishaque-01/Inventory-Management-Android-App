@@ -38,13 +38,9 @@ public class CustomerAlertDialog extends AlertDialog {
 
         Button edit = findViewById(R.id.edit);
         edit.setOnClickListener(v -> {
-//            try {
-//                Intent intent = new Intent(getContext(), EditCustomer.class);
-//                intent.putExtra("customer", customer);
-//                getContext().startActivity(intent);
-//            } catch (Exception e) {
-//                Log.d("checkDB", e.getMessage());
-//            }
+            Intent intent = new Intent(getContext(), EditCustomer.class);
+            intent.putExtra("customer", customer);
+            getContext().startActivity(intent);
             dismiss();
         });
     }
