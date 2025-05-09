@@ -285,35 +285,15 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-//    public boolean customerExists(CustomerModel customer) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE +
-//                " WHERE " + DbParams.CUSTOMER_ID + " = ?" +
-//                " AND " + DbParams.CUSTOMER_NAME + " = ?" +
-//                " AND " + DbParams.CUSTOMER_AREA_ID + " = ?";
-//        String[] where = {String.valueOf(customer.getCustomerId()), customer.getCustomerName(), String.valueOf(customer.getCustomerArea())};
-//        Cursor cursor = db.rawQuery(query, where);
-//        boolean exists = cursor.getCount() > 0;
-//        cursor.close();
-//        db.close();
-//        return exists;
-//    }
-
-
     public boolean customerExists(CustomerModel customer) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE +
                 " WHERE " + DbParams.CUSTOMER_ID + " = ?" +
                 " AND " + DbParams.CUSTOMER_NAME + " = ?" +
                 " AND " + DbParams.CUSTOMER_AREA_ID + " = ?";
-
-        Cursor cursor = db.rawQuery(query, new String[]{
-                String.valueOf(customer.getCustomerId()),
-                customer.getCustomerName(),
-                String.valueOf(customer.getCustomerArea())
-        });
-
-        boolean exists = cursor.moveToFirst();
+        String[] where = {String.valueOf(customer.getCustomerId()), customer.getCustomerName(), String.valueOf(customer.getCustomerArea())};
+        Cursor cursor = db.rawQuery(query, where);
+        boolean exists = cursor.getCount() > 0;
         cursor.close();
         db.close();
         return exists;
