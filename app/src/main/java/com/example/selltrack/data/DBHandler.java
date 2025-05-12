@@ -244,14 +244,12 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return list;
     }
-
     public void deleteCity(CitiesModel city) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(DbParams.CITY_TABLE, DbParams.CITY_NAME + "= ? AND " +
                 DbParams.CITY_AREA_NAME, new String[]{city.getCityName(), city.getAreaName()});
         db.close();
     }
-
     public boolean isCityExists(CitiesModel city) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * " + " FROM " + DbParams.CITY_TABLE +
@@ -284,7 +282,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 DbParams.CUSTOMER_ID + " = ?", new String[]{String.valueOf(customer.getCustomerId())});
         db.close();
     }
-
     public boolean customerExists(CustomerModel customer) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE +
@@ -320,5 +317,48 @@ public class DBHandler extends SQLiteOpenHelper {
         return list;
     }
 
-
+    public List<String> getAreas() {
+        List<String> list = new ArrayList<>();
+        List<CitiesModel> cities = getAllCities();
+        for (int i = 0; i < cities.size(); i++) {
+            CitiesModel area = cities.get(i);
+            String s = area.getAreaId() + ". [" + area.getAreaName().toUpperCase() + ", (" + area.getCityName().toUpperCase() + ")]";
+            list.add(s);
+        }
+        return list;
+    }
+    public List<String> getCustomers(int areaId) {
+        List<String> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE + " WHERE " + DbParams.CUSTOMER_AREA_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(areaId)});
+        if(cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String str = id + ". [" + name.toUpperCase() + "]";
+                list.add(str);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+    public List<String> getCustomers() {
+        List<String> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE;
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String str = id + ". " + name.toUpperCase();
+                list.add(str);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
 }

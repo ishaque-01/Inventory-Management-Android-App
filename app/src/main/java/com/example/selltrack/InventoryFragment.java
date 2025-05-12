@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,8 @@ public class InventoryFragment extends Fragment {
 
         FloatingActionButton addInventory = view.findViewById(R.id.addItems);
         addInventory.setOnClickListener((v) -> {
-            Intent intent = new Intent(getContext(), AddItemsInventory.class);
+//            Intent intent = new Intent(getContext(), AddItemsInventory.class);
+            Intent intent = new Intent(getContext(), AddSale.class);
             startActivity(intent);
         });
 
