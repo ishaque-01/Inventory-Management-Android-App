@@ -7,10 +7,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -30,12 +34,14 @@ public class AddSale extends AppCompatActivity {
     private DBHandler dbHandler;
     private List<String> areas;
     private List<String> customers;
-    private List<ItemModel> itemList;
+    private List<ItemModel> itemList, updatedList;
     private Spinner spinnerArea, spinnerCustomer;
     private ArrayAdapter<String> adapterArea, adapterCustomers;
     private ItemsAdapter itemsAdapter;
-    private Button select;
+    private Button select, makeSale;
+    private TextView totalItem, totalPrice;
     private RecyclerView itemRecycler;
+    private ActivityResultLauncher<Intent> launcher;
 
 
     @Override
@@ -53,6 +59,7 @@ public class AddSale extends AppCompatActivity {
         areas = dbHandler.getAreas();
         areas.add(0, "Select Area");
         customers = dbHandler.getCustomers();
+        customers.add(0, "Select Customer");
 
         spinnerArea = findViewById(R.id.spinnerArea);
         spinnerCustomer = findViewById(R.id.spinnerCustomer);
@@ -78,6 +85,7 @@ public class AddSale extends AppCompatActivity {
                     setCustomers(id);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -95,9 +103,28 @@ public class AddSale extends AppCompatActivity {
             }
         });
 
+
+        launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        updatedList = data.getParcelableArrayListExtra("selectedList");
+                        updateData(updatedList);
+                    }
+                }
+        );
         select.setOnClickListener((v) -> {
             Intent intent = new Intent(AddSale.this, SelectItems.class);
-            startActivity(intent);
+            launcher.launch(intent);
+        });
+
+        totalItem = findViewById(R.id.totalItems);
+        totalPrice = findViewById(R.id.totalPrice);
+
+        makeSale = findViewById(R.id.makeSale);
+        makeSale.setOnClickListener((v) -> {
+            checkInputs();
         });
 
         itemRecycler = findViewById(R.id.itemsRecycler);
@@ -106,6 +133,46 @@ public class AddSale extends AppCompatActivity {
         itemList = new ArrayList<>();
         itemsAdapter = new ItemsAdapter(this, itemList);
         itemRecycler.setAdapter(itemsAdapter);
+    }
+
+    private void checkInputs() {
+        List<ItemModel> myList = itemsAdapter.getItemList();
+        String areaSelected = spinnerArea.getSelectedItem().toString();
+        String customerSelected = spinnerCustomer.getSelectedItem().toString();
+
+        if (areaSelected.equalsIgnoreCase("select area")) {
+            Toast.makeText(this, "Please Select an area", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (customerSelected.equalsIgnoreCase("select customer")) {
+            Toast.makeText(this, "Please Select a Customer", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (myList.isEmpty()) {
+            Toast.makeText(this, "Select Products", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(validateQuantity(myList)) {
+            Toast.makeText(this, "Item Quantity Invalid!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+
+    private boolean validateQuantity(List<ItemModel> myList) {
+        for (ItemModel item : myList) {
+            int selectedQuantity = item.getQuantity();
+            int availQuantity = dbHandler.getItemDetails(item).getQuantity();
+            if(selectedQuantity == availQuantity)
+                return true;
+        }
+        return false;
+    }
+
+    private void updateData(List<ItemModel> updatedList) {
+        itemList.clear();
+        itemList.addAll(updatedList);
+        itemsAdapter.notifyDataSetChanged();
+        totalItem.setText("Items: " + updatedList.size());
     }
 
     private void setCustomers(int id) {

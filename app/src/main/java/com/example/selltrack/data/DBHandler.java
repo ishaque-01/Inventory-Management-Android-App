@@ -6,9 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.selltrack.CitiesFragment;
 import com.example.selltrack.Model.CitiesModel;
 import com.example.selltrack.Model.CustomerModel;
 import com.example.selltrack.Model.ItemModel;
@@ -360,5 +358,22 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return list;
+    }
+
+    public ItemModel getItemDetails(ItemModel item) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + DbParams.INVENTORY_TABLE + " WHERE " + DbParams.PRODUCT_NAME + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[] {item.getItemName()});
+        ItemModel itemModel = null;
+        if(cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            float price = cursor.getFloat(2);
+            int quantity = cursor.getInt(3);
+            itemModel = new ItemModel(id, name, quantity, price);
+        }
+        cursor.close();
+        db.close();
+        return itemModel;
     }
 }

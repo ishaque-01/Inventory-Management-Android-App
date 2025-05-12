@@ -48,8 +48,7 @@ public class InventoryFragment extends Fragment {
 
         FloatingActionButton addInventory = view.findViewById(R.id.addItems);
         addInventory.setOnClickListener((v) -> {
-//            Intent intent = new Intent(getContext(), AddItemsInventory.class);
-            Intent intent = new Intent(getContext(), AddSale.class);
+            Intent intent = new Intent(getContext(), AddItemsInventory.class);
             startActivity(intent);
         });
 

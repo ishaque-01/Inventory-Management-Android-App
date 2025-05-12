@@ -27,7 +27,7 @@ public class InventoryAlertDialog extends Dialog {
 
         setContentView(R.layout.inventory_alert_dialog);
 
-        String message = "Do You Want To Delete \"" + item.getItemName() + "\" From Database?";
+        String message = "Do You Want To Edit \"" + item.getItemName() + "\" In Database?";
         final TextView messageTxt = findViewById(R.id.textView);
         messageTxt.setText(message);
 

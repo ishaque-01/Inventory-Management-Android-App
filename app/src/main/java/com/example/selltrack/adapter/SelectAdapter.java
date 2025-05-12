@@ -44,7 +44,6 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.ItemViewHo
         holder.button.setOnClickListener((v) -> {
             if(holder.button.getText().equals("Add")) {
                 list.add(item);
-                Toast.makeText(context, "Item added", Toast.LENGTH_SHORT).show();
                 holder.button.setText("Remove");
             } else {
                 list.remove(item);

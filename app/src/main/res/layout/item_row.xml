@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Item-1"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:fontFamily="serif"
                 android:maxLines="1"
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Rs. 999"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:fontFamily="serif"
                 android:paddingEnd="8dp"/>
         </LinearLayout>
@@ -57,13 +57,14 @@
             app:srcCompat="@drawable/minus" />
 
         <!-- Quantity Text -->
-        <TextView
+        <EditText
             android:id="@+id/quantity"
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="1"
             android:textSize="16sp"
+            android:inputType="number"
             android:fontFamily="serif" />
 
         <!-- Plus Button -->

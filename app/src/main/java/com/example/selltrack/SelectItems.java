@@ -49,12 +49,15 @@ public class SelectItems extends AppCompatActivity {
         finalize.setOnClickListener((v) -> {
             selectedItemList = adapter.getItemList();
 
+            Intent intent = new Intent(this, AddSale.class);
+            intent.putParcelableArrayListExtra("selectedList", new ArrayList<>(selectedItemList));
+            setResult(RESULT_OK, intent);
+            finish();
         });
 
         cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener((v) -> {
-            selectedItemList.clear();
-            Toast.makeText(this, "No Item Selected", Toast.LENGTH_SHORT).show();
+
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(SelectItems.this));

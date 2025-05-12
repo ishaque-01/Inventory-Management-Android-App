@@ -24,7 +24,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:paddingBottom="80dp"
         android:contentDescription="Customers Box"
         app:layout_constraintEnd_toEndOf="parent"
