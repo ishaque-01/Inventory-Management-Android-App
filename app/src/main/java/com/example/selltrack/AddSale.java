@@ -23,11 +23,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.selltrack.Model.ItemModel;
+import com.example.selltrack.Model.SalesModel;
 import com.example.selltrack.adapter.ItemsAdapter;
 import com.example.selltrack.data.DBHandler;
+import com.google.android.material.card.MaterialCardView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AddSale extends AppCompatActivity {
 
@@ -39,7 +44,7 @@ public class AddSale extends AppCompatActivity {
     private ArrayAdapter<String> adapterArea, adapterCustomers;
     private ItemsAdapter itemsAdapter;
     private Button select, makeSale;
-    private TextView totalItem, totalPrice;
+    private TextView totalItem, totalPrice, date, time;
     private RecyclerView itemRecycler;
     private ActivityResultLauncher<Intent> launcher;
 
@@ -127,11 +132,30 @@ public class AddSale extends AppCompatActivity {
             checkInputs();
         });
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss a", Locale.getDefault());
+        String currentDate = dateFormat.format(new Date());
+        String currentTime = timeFormat.format(new Date());
+
+        date = findViewById(R.id.date);
+        time = findViewById(R.id.time);
+        date.setText("Date: " + currentDate);
+        time.setText("Time: " + currentTime);
+
         itemRecycler = findViewById(R.id.itemsRecycler);
         itemRecycler.setLayoutManager(new LinearLayoutManager(this));
         itemRecycler.setHasFixedSize(false);
         itemList = new ArrayList<>();
+
         itemsAdapter = new ItemsAdapter(this, itemList);
+        itemsAdapter.setOnQuantityChangeListener(() -> {
+            float total = 0;
+            for (ItemModel item : itemsAdapter.getItemList()) {
+                total += item.getQuantity() * item.getPrice();
+            }
+            totalPrice.setText("Total Price: " + total);
+        });
+
         itemRecycler.setAdapter(itemsAdapter);
     }
 
@@ -139,9 +163,8 @@ public class AddSale extends AppCompatActivity {
         List<ItemModel> myList = itemsAdapter.getItemList();
         String areaSelected = spinnerArea.getSelectedItem().toString();
         String customerSelected = spinnerCustomer.getSelectedItem().toString();
-
         if (areaSelected.equalsIgnoreCase("select area")) {
-            Toast.makeText(this, "Please Select an area", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Select an Area", Toast.LENGTH_SHORT).show();
             return;
         }
         if (customerSelected.equalsIgnoreCase("select customer")) {
@@ -152,17 +175,39 @@ public class AddSale extends AppCompatActivity {
             Toast.makeText(this, "Select Products", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(validateQuantity(myList)) {
+        if (validateQuantity(myList)) {
             Toast.makeText(this, "Item Quantity Invalid!", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        int customerId = Integer.parseInt(customerSelected.substring(0, customerSelected.indexOf(".")));
+        int salesId = sellItem(customerId);
+
+        for (ItemModel item : myList) {
+            int productId = item.getId();
+            int soldQuantity = item.getQuantity();
+            dbHandler.addSalesItem(salesId, productId, soldQuantity);
+        }
+    }
+
+    private int sellItem(int customerId) {
+        String p = totalPrice.getText().toString();
+        p = p.substring(p.indexOf(": ") + 1);
+        float price = Float.parseFloat(p);
+        String myDate = date.getText().toString();
+        myDate = myDate.substring(myDate.indexOf(" ") + 1);
+        String myTime = time.getText().toString();
+        myTime = myTime.substring(myTime.indexOf(" ") + 1);
+        String dateTime = myDate + " " + myTime;
+        SalesModel sales = new SalesModel(customerId, price, dateTime);
+        return dbHandler.addSales(sales);
     }
 
     private boolean validateQuantity(List<ItemModel> myList) {
         for (ItemModel item : myList) {
             int selectedQuantity = item.getQuantity();
             int availQuantity = dbHandler.getItemDetails(item).getQuantity();
-            if(selectedQuantity == availQuantity)
+            if (selectedQuantity > availQuantity)
                 return true;
         }
         return false;
@@ -173,6 +218,11 @@ public class AddSale extends AppCompatActivity {
         itemList.addAll(updatedList);
         itemsAdapter.notifyDataSetChanged();
         totalItem.setText("Items: " + updatedList.size());
+        float price = 0;
+        for (ItemModel item : updatedList) {
+            price += item.getPrice();
+        }
+        totalPrice.setText("Total Price: " + String.valueOf(price));
     }
 
     private void setCustomers(int id) {

@@ -3,6 +3,7 @@ package com.example.selltrack.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.util.Log;
 import com.example.selltrack.Model.CitiesModel;
 import com.example.selltrack.Model.CustomerModel;
 import com.example.selltrack.Model.ItemModel;
+import com.example.selltrack.Model.SalesItemModel;
+import com.example.selltrack.Model.SalesModel;
 import com.example.selltrack.parameters.DbParams;
 
 import java.util.ArrayList;
@@ -132,6 +135,23 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(createSalesItemsTable);
     }
 
+    public List<SalesItemModel> getSalesItemList(int saleId) {
+        List<SalesItemModel> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + DbParams.SALES_ITEM_TABLE + " WHERE " + DbParams.SALES_SELL_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(saleId)});
+        if(cursor.moveToFirst()) {
+            do {
+                int salesItemId = cursor.getInt(0);
+                int salesId = cursor.getInt(1);
+                int productId = cursor.getInt(2);
+                int soldQuantity = cursor.getInt(3);
+                SalesItemModel salesItem = new SalesItemModel(salesItemId, salesId, productId, soldQuantity);
+                list.add(salesItem);
+            } while (cursor.moveToNext());
+        }
+        return list;
+    }
     public void addItemInventory(ItemModel item) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -141,7 +161,6 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(DbParams.INVENTORY_TABLE, null, values);
         db.close();
     }
-
     public List<ItemModel> getInventoryItems() {
         List<ItemModel> itemModelList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -160,7 +179,6 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         return itemModelList;
     }
-
     public void checkTables() {
         try {
             SQLiteDatabase db = this.getReadableDatabase();
@@ -183,7 +201,6 @@ public class DBHandler extends SQLiteOpenHelper {
             Log.e("CheckDB", "Error checking tables: " + e.getMessage());
         }
     }
-
     public boolean itemExists(String itemName) {
         SQLiteDatabase db = this.getReadableDatabase();
         String select = "SELECT * " + " FROM " + DbParams.INVENTORY_TABLE + " WHERE " + DbParams.PRODUCT_NAME + " = ?";
@@ -298,7 +315,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE;
         Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 CustomerModel customerModel = new CustomerModel();
                 int cId = cursor.getInt(0);
@@ -308,13 +325,12 @@ public class DBHandler extends SQLiteOpenHelper {
                 customerModel.setCustomerName(name);
                 customerModel.setCustomerArea(aId);
                 list.add(customerModel);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
         return list;
     }
-
     public List<String> getAreas() {
         List<String> list = new ArrayList<>();
         List<CitiesModel> cities = getAllCities();
@@ -330,7 +346,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE + " WHERE " + DbParams.CUSTOMER_AREA_ID + " = ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(areaId)});
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
@@ -347,7 +363,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE;
         Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
@@ -359,13 +375,12 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return list;
     }
-
     public ItemModel getItemDetails(ItemModel item) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + DbParams.INVENTORY_TABLE + " WHERE " + DbParams.PRODUCT_NAME + " = ?";
-        Cursor cursor = db.rawQuery(query, new String[] {item.getItemName()});
+        Cursor cursor = db.rawQuery(query, new String[]{item.getItemName()});
         ItemModel itemModel = null;
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             int id = cursor.getInt(0);
             String name = cursor.getString(1);
             float price = cursor.getFloat(2);
@@ -375,5 +390,79 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return itemModel;
+    }
+    public ItemModel getItemDetails(int itemId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + DbParams.INVENTORY_TABLE + " WHERE " + DbParams.PRODUCT_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(itemId)});
+        ItemModel itemModel = null;
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            float price = cursor.getFloat(2);
+            int quantity = cursor.getInt(3);
+            itemModel = new ItemModel(id, name, quantity, price);
+        }
+        cursor.close();
+        db.close();
+        return itemModel;
+    }
+
+    public CustomerModel getCustomerDetails(int customerId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + DbParams.CUSTOMER_TABLE + " WHERE " + DbParams.CUSTOMER_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(customerId)});
+        CustomerModel customerModel = null;
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            int areaId = cursor.getInt(2);
+            customerModel = new CustomerModel(id, name, areaId);
+        }
+        cursor.close();
+        db.close();
+        return customerModel;
+    }
+    public int addSales(SalesModel sale) {
+        SQLiteDatabase dbw = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DbParams.SELLS_CUSTOMER_ID, sale.getCustomerId());
+        values.put(DbParams.TOTAL_PRICE, sale.getTotalPrice());
+        values.put(DbParams.DATE, sale.getDate());
+        long insertedRow = dbw.insert(DbParams.SELLS_TABLE, null, values);
+        dbw.close();
+        return (int) insertedRow;
+    }
+
+    public List<SalesModel> getSalesList() {
+        List<SalesModel> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + DbParams.SELLS_TABLE;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int salesId = cursor.getInt(0);
+                int customerId = cursor.getInt(1);
+                float totalPrice = cursor.getFloat(2);
+                String date = cursor.getString(3);
+                SalesModel sale = new SalesModel(salesId, customerId, totalPrice, date);
+                list.add(sale);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return list;
+    }
+    public void addSalesItem(int sellId, int productId, int soldQuantity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DbParams.SALES_SELL_ID, sellId);
+        values.put(DbParams.SALES_PRODUCT_ID, productId);
+        values.put(DbParams.SALES_SOLD_QUANTITY, soldQuantity);
+        db.insert(DbParams.SALES_ITEM_TABLE, null, values);
+        // Subtract From Inventory
+        ItemModel item = getItemDetails(productId);
+        item.setQuantity(item.getQuantity() - soldQuantity);
+        updateItem(item);
+        db.close();
     }
 }

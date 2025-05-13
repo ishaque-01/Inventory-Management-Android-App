@@ -3,6 +3,7 @@ package com.example.selltrack.adapter;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.selltrack.Model.ItemModel;
 import com.example.selltrack.R;
 
+
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder> {
 
     private Context context;
     private List<ItemModel> list;
+    private OnQuantityChangeListener quantityChangeListener;
 
     public ItemsAdapter(Context context, List<ItemModel> list) {
         this.context = context;
@@ -45,7 +50,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
 
         holder.itemName.setText(item.getItemName().toUpperCase());
         holder.price.setText(String.valueOf(item.getPrice()));
-        holder.quantity.setText("0");
+        holder.quantity.setText("1");
+        item.setQuantity(1);
 
         holder.quantity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -53,6 +59,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                 try {
                     int qty = Integer.parseInt(s.toString());
                     item.setQuantity(qty);
+                    if (quantityChangeListener != null) {
+                        quantityChangeListener.onQuantityChanged();
+                    }
                 } catch (NumberFormatException e) {
                     item.setQuantity(1);
                 }
@@ -65,6 +74,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
             int q = Integer.parseInt(holder.quantity.getText().toString()) + 1;
             item.setQuantity(q);
             holder.quantity.setText(String.valueOf(q));
+            if (quantityChangeListener != null) {
+                quantityChangeListener.onQuantityChanged();
+            }
         });
 
         holder.minus.setOnClickListener((v) -> {
@@ -73,9 +85,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                 q--;
                 item.setQuantity(q);
                 holder.quantity.setText(String.valueOf(q));
+                if (quantityChangeListener != null) {
+                    quantityChangeListener.onQuantityChanged();
+                }
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -96,4 +112,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
             minus = itemView.findViewById(R.id.minus);
         }
     }
+
+    public interface OnQuantityChangeListener {
+        void onQuantityChanged();
+    }
+    public void setOnQuantityChangeListener(OnQuantityChangeListener listener) {
+        this.quantityChangeListener = listener;
+    }
+
+
 }
