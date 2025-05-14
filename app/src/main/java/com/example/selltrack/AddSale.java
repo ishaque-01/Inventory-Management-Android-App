@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AddSale extends AppCompatActivity {
 
@@ -153,7 +155,7 @@ public class AddSale extends AppCompatActivity {
             for (ItemModel item : itemsAdapter.getItemList()) {
                 total += item.getQuantity() * item.getPrice();
             }
-            totalPrice.setText("Total Price: " + total);
+            totalPrice.setText("Total: " + total);
         });
 
         itemRecycler.setAdapter(itemsAdapter);
@@ -188,6 +190,15 @@ public class AddSale extends AppCompatActivity {
             int soldQuantity = item.getQuantity();
             dbHandler.addSalesItem(salesId, productId, soldQuantity);
         }
+        makeSale.setText("Sale Saved");
+        TimerTask task = new TimerTask() {
+            public void run() {
+                String message = "Save Sale";
+                makeSale.setText(message);
+            }
+        };
+        Timer timer = new Timer("Timer");
+        timer.schedule(task, 2000);
     }
 
     private int sellItem(int customerId) {
@@ -222,7 +233,7 @@ public class AddSale extends AppCompatActivity {
         for (ItemModel item : updatedList) {
             price += item.getPrice();
         }
-        totalPrice.setText("Total Price: " + String.valueOf(price));
+        totalPrice.setText("Total: " + price);
     }
 
     private void setCustomers(int id) {

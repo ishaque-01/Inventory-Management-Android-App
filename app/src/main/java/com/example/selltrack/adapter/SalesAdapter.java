@@ -46,7 +46,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.SalesViewHol
         holder.salesId.setText(String.valueOf(sales.getSalesId()));
         holder.customerName.setText(customer.getCustomerName().toUpperCase());
         holder.dateTime.setText(sales.getDate());
-        holder.totalPrice.setText(String.valueOf(sales.getTotalPrice()));
+        holder.totalPrice.setText("Price: " + sales.getTotalPrice());
     }
 
     @Override
