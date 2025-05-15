@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.selltrack.Model.CitiesModel;
 import com.example.selltrack.Model.CustomerModel;
 import com.example.selltrack.Model.ItemModel;
+import com.example.selltrack.Model.SalesItemModel;
 import com.example.selltrack.Model.SalesModel;
 import com.example.selltrack.data.DBHandler;
 import com.example.selltrack.databinding.ActivityMainBinding;

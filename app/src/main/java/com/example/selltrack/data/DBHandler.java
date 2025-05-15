@@ -150,6 +150,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 list.add(salesItem);
             } while (cursor.moveToNext());
         }
+        cursor.close();
+        db.close();
         return list;
     }
     public void addItemInventory(ItemModel item) {
@@ -177,6 +179,7 @@ public class DBHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
+        db.close();
         return itemModelList;
     }
     public void checkTables() {
@@ -185,7 +188,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Log.d("CheckDB", "Checking tables...");
 
             Cursor cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
-            if (cursor == null || cursor.getCount() == 0) {
+            if (cursor.getCount() == 0) {
                 Log.e("CheckDB", "Cursor is null! No tables found.");
                 return;
             }
@@ -196,6 +199,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
                 cursor.close();
             }
+            cursor.close();
             db.close();
         } catch (Exception e) {
             Log.e("CheckDB", "Error checking tables: " + e.getMessage());
@@ -449,6 +453,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 list.add(sale);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         db.close();
         return list;
     }
